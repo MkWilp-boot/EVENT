@@ -23,6 +23,7 @@ func main() {
 		events := api.Group("/Events")
 		{
 			events.Get("/:id", routes.EventGetById)
+			events.Post("/", routes.EventPost)
 		}
 	}
 	app.Listen(":8080")
