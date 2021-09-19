@@ -3,8 +3,9 @@ package main
 import (
 	database "Event/cmd/pkg/database"
 	structs "Event/cmd/pkg/structs"
-	"fmt"
-	"time"
+	routes "Event/cmd/routes"
+
+	"github.com/gofiber/fiber/v2"
 )
 
 const IsDevelopment = true
@@ -14,14 +15,15 @@ func main() {
 		database.OpenContext("test.db")
 	}
 	database.DB.AutoMigrate(&structs.Event{})
-	database.DB.Create(&structs.Event{
-		Name:     "Evento Teste",
-		Image:    "evt_" + time.Now().GoString(),
-		When:     time.Now().Add(time.Duration(time.Now().Day() + 30)),
-		Where:    "Rio de Janeiro",
-		Duration: time.Duration(time.Hour * 2),
-	})
-	var e structs.Event
-	database.DB.First(&e, 1)
-	fmt.Println(e)
+
+	// API
+	app := fiber.New()
+	api := app.Group("/api")
+	{
+		events := api.Group("/Events")
+		{
+			events.Get("/:id", routes.EventGetById)
+		}
+	}
+	app.Listen(":8080")
 }

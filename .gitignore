@@ -1,4 +1,4 @@
 TODO.txt
 *.exe
-go.mod
+go.sum
 *.db
