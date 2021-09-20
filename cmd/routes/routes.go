@@ -32,5 +32,6 @@ func EventPost(c *fiber.Ctx) error {
 
 	database.DB.Create(&payload).First(&payload)
 	log.Println(payload)
+	c.Status(201)
 	return c.JSON(payload)
 }
