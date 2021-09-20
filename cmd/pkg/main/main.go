@@ -24,6 +24,7 @@ func main() {
 		{
 			events.Get("/:id", routes.EventGetById)
 			events.Post("/", routes.EventPost)
+			events.Delete("/:id", routes.EventDelete)
 		}
 	}
 	app.Listen(":8080")
